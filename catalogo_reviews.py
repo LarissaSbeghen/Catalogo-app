@@ -1,5 +1,5 @@
 #avaliaçao: o que o usuario escreve sobre uma obra
-class avaliacao:
+class Avaliacao:
     def __init__(self, autor, nota, comentario = ""):
         if not 0 <= nota <= 10:
             raise ValueError("A nota deve estar entre 0 a 10.")
@@ -14,7 +14,7 @@ class avaliacao:
         return texto
 
 #obra: classe base, todas as outras classes vao herdar dela
-class obra:
+class Obra:
     tipo = "Obra"
     def __init__(self, titulo, ano, genero):
         self.titulo = titulo
@@ -42,17 +42,32 @@ class obra:
             base += f" | {extra}"
         return f"{base} | média: {self.media():.1f} ({len(self.avaliacoes)} avaliações)"
 
+class Filme(Obra):
+    tipo = "Filme"
+
+    def __init__(self, titulo, ano, genero, duracao_min):
+        super().__init__(titulo, ano, genero)
+        self.duracao_min = duracao_min
+
+    def detalhes(self):
+        return f"{self.duracao_min} min"
+
+
 def main():
-    avaliacaao = avaliacao("Lari", 10, "EU AMOOOO, MTO BOM RECOMENDO MUITO")
-    print(avaliacaao)
-    obrayay = obra("The Owl House", 2020, "Aventura")
+    avaliacao = Avaliacao("Lari", 10, "EU AMOOOO, MTO BOM RECOMENDO MUITO")
+    print(avaliacao)
+    obrayay = Obra("The Owl House", 2020, "Aventura")
     print(obrayay)
 
-    obrayay.adicionar_ava(avaliacao("Mi", 7))
-    obrayay.adicionar_ava(avaliacao("Mily", 9))
-    obrayay.adicionar_ava(avaliacao("Lari", 10))
+    obrayay.adicionar_ava(Avaliacao("Mi", 7))
+    obrayay.adicionar_ava(Avaliacao("Mily", 9))
+    obrayay.adicionar_ava(Avaliacao("Lari", 10))
     print(obrayay)
     print("Media: ", obrayay.media())
+
+    filme = Filme("SuperMarioGalaxy", 2026, "Aventura", 99)
+    filme.adicionar_ava(Avaliacao("Carla", 10))
+    print(filme)
 
 if __name__ == "__main__":
     main()
